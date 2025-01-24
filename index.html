@@ -1,0 +1,302 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>爱的告白</title>
+    <link href="https://fonts.googleapis.com/css2?family=Mochiy+Pop+One&display=swap" rel="stylesheet">
+    <style>
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            background: linear-gradient(45deg, #ff9a9e, #fad0c4);
+            font-family: 'Arial', sans-serif;
+        }
+
+        .heart {
+            position: relative;
+            width: 100px;
+            height: 100px;
+            cursor: pointer;
+            animation: pulse 1.5s infinite;
+        }
+
+        .heart::before,
+        .heart::after {
+            content: '';
+            position: absolute;
+            width: 50px;
+            height: 80px;
+            background-color: #ff4b4b;
+            border-radius: 50px 50px 0 0;
+            transform-origin: 50% 100%;
+        }
+
+        .heart::before {
+            left: 50px;
+            transform: rotate(-45deg);
+        }
+
+        .heart::after {
+            left: 0;
+            transform: rotate(45deg);
+        }
+
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.1); }
+            100% { transform: scale(1); }
+        }
+
+        .message {
+            position: fixed;
+            top: 60%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            font-size: 36px;
+            font-family: 'Mochiy Pop One', sans-serif;
+            color: #ff69b4;
+            text-shadow: 3px 3px 6px rgba(0, 0, 0, 0.2);
+            opacity: 0;
+            transition: opacity 0.5s;
+            display: none;
+            font-weight: bold;
+            z-index: 100;
+        }
+
+        .show {
+            display: block;
+            opacity: 1;
+            animation: combinedAnimation 3.5s ease-out forwards;
+        }
+
+        @keyframes combinedAnimation {
+            0% {
+                opacity: 0;
+                transform: translate(-50%, -50%) rotate(0deg) scale(0.5);
+            }
+            40% {
+                opacity: 0.7;
+                transform: translate(-50%, -50%) rotate(1080deg) scale(0.5);
+            }
+            70% {
+                opacity: 0.8;
+                transform: translate(-50%, -50%) rotate(1080deg) scale(1.2);
+            }
+            100% {
+                opacity: 1;
+                transform: translate(-50%, -50%) rotate(1080deg) scale(1);
+            }
+        }
+
+        .message.show {
+            animation: combinedAnimation 3.5s ease-out forwards,
+                      glow 2s ease-in-out infinite alternate 3.5s;
+        }
+
+        @keyframes glow {
+            from {
+                text-shadow: 0 0 5px #fff, 
+                           0 0 10px #fff, 
+                           0 0 15px #ff69b4, 
+                           0 0 20px #ff69b4;
+            }
+            to {
+                text-shadow: 0 0 10px #fff, 
+                           0 0 20px #fff, 
+                           0 0 30px #ff69b4, 
+                           0 0 40px #ff69b4;
+            }
+        }
+
+        /* 修改小动物样式 */
+        .pet {
+            position: fixed;
+            width: 40px;
+            height: 40px;
+            pointer-events: none;
+            z-index: 90;
+        }
+
+        .cat {
+            bottom: 20px;
+            left: 20px;
+            animation: catWalk 8s linear infinite;
+        }
+
+        .dog {
+            bottom: 20px;
+            right: 20px;
+            animation: dogWalk 10s linear infinite;
+        }
+
+        /* 添加围绕文字的小动物 */
+        .pet-around {
+            position: fixed;
+            width: 30px;
+            height: 30px;
+            pointer-events: none;
+            z-index: 90;
+        }
+
+        .pet-1 { animation: rotate1 6s linear infinite; }
+        .pet-2 { animation: rotate2 7s linear infinite; }
+        .pet-3 { animation: rotate3 8s linear infinite; }
+        .pet-4 { animation: rotate4 9s linear infinite; }
+
+        @keyframes rotate1 {
+            from {
+                transform: rotate(0deg) translate(100px) rotate(0deg);
+            }
+            to {
+                transform: rotate(360deg) translate(100px) rotate(-360deg);
+            }
+        }
+
+        @keyframes rotate2 {
+            from {
+                transform: rotate(90deg) translate(120px) rotate(-90deg);
+            }
+            to {
+                transform: rotate(450deg) translate(120px) rotate(-450deg);
+            }
+        }
+
+        @keyframes rotate3 {
+            from {
+                transform: rotate(180deg) translate(140px) rotate(-180deg);
+            }
+            to {
+                transform: rotate(540deg) translate(140px) rotate(-540deg);
+            }
+        }
+
+        @keyframes rotate4 {
+            from {
+                transform: rotate(270deg) translate(160px) rotate(-270deg);
+            }
+            to {
+                transform: rotate(630deg) translate(160px) rotate(-630deg);
+            }
+        }
+
+        .center-container {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            z-index: 80;
+        }
+
+        /* 添加小爱心飘落效果 */
+        .floating-heart {
+            position: fixed;
+            color: #ff69b4;
+            font-size: 20px;
+            pointer-events: none;
+            animation: float 3s linear infinite;
+        }
+
+        @keyframes float {
+            0% {
+                transform: translateY(-100vh) rotate(0deg);
+                opacity: 1;
+            }
+            100% {
+                transform: translateY(100vh) rotate(360deg);
+                opacity: 0;
+            }
+        }
+
+        /* 添加照片样式 */
+        .photo-container {
+            position: fixed;
+            top: 20%;
+            left: 50%;
+            transform: translate(-50%, -50%) scale(0);
+            width: 200px;
+            height: 200px;
+            border-radius: 10px;
+            overflow: hidden;
+            opacity: 0;
+            transition: all 0.5s ease;
+            z-index: 95;
+            box-shadow: 0 0 20px rgba(255, 105, 180, 0.5);
+        }
+
+        .photo-container.show {
+            opacity: 1;
+            transform: translate(-50%, -50%) scale(1);
+        }
+
+        .photo-container img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+    </style>
+</head>
+<body>
+    <div class="heart" onclick="showMessage()"></div>
+    
+    <!-- 修改照片容器中的图片链接 -->
+    <div class="photo-container" id="photoContainer">
+        <img src="https://raw.githubusercontent.com/你的用户名/你的用户名.github.io/main/de7a5dbf38fb64bc56f79144d05dedf3a40cd1a0.jpg" alt="照片">
+    </div>
+    
+    <!-- 添加围绕中心的小动物容器 -->
+    <div class="center-container">
+        <img src="https://api.iconify.design/noto:cat.svg" class="pet-around pet-1" alt="猫咪1">
+        <img src="https://api.iconify.design/noto:dog.svg" class="pet-around pet-2" alt="小狗1">
+        <img src="https://api.iconify.design/noto:cat-face.svg" class="pet-around pet-3" alt="猫咪2">
+        <img src="https://api.iconify.design/noto:dog-face.svg" class="pet-around pet-4" alt="小狗2">
+    </div>
+    
+    <div class="message" id="loveMessage">甫星颖 我超级爱你</div>
+    
+    <!-- 原有的走动的小动物 -->
+    <img src="https://api.iconify.design/noto:cat.svg" class="pet cat" alt="猫咪">
+    <img src="https://api.iconify.design/noto:dog.svg" class="pet dog" alt="小狗">
+
+    <script>
+        function showMessage() {
+            const message = document.getElementById('loveMessage');
+            const photo = document.getElementById('photoContainer');
+            
+            // 显示照片和消息
+            message.classList.add('show');
+            photo.classList.add('show');
+            
+            // 添加爱心点击效果
+            const heart = document.querySelector('.heart');
+            heart.style.animation = 'none';
+            heart.offsetHeight;
+            heart.style.animation = 'pulse 1.5s infinite';
+            
+            // 创建飘落的小爱心
+            createFloatingHearts();
+        }
+
+        // 创建飘落的小爱心
+        function createFloatingHearts() {
+            for (let i = 0; i < 20; i++) {
+                setTimeout(() => {
+                    const heart = document.createElement('div');
+                    heart.innerHTML = '❤';
+                    heart.className = 'floating-heart';
+                    heart.style.left = Math.random() * 100 + 'vw';
+                    document.body.appendChild(heart);
+                    
+                    // 动画结束后移除元素
+                    setTimeout(() => {
+                        heart.remove();
+                    }, 3000);
+                }, i * 150);
+            }
+        }
+    </script>
+</body>
+</html> 
